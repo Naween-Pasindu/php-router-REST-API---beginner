@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <link rel="stylesheet" href="/<?php echo baseUrl; ?>/public/assets/css/main.css">
+    <link rel="stylesheet" href="/simple/assets/css/main.css">
 <style>
     /*
 body{
@@ -15,10 +15,11 @@ body{
 </style>
 </head>
 <body id="body">
-this is admin<br>
+this is inventory<br>
 <a href="/<?php echo baseUrl; ?>/">Home</a><br>
 <a href="/<?php echo baseUrl; ?>/a">a</a><br>
 <a href="/<?php echo baseUrl; ?>/b">b</a><br>
+<a href="Inventory/AddItem">add item</a><br>
     <?php
         echo getcwd();
     ?>

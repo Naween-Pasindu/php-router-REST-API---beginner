@@ -2,5 +2,6 @@
   Options -Multiviews
   RewriteEngine on
   RewriteRule ^$ public/ [L]
+  RewriteCond %{REQUEST_URI}  !(\.css|\.js|\.ico|\.jpeg|\.jpg|\.pdf)$
   RewriteRule  ^(.+)$ index.php?url=$1 [QSA,L]
 </IfModule>
