@@ -36,7 +36,7 @@ class Router{
                         $this->currentController = 'public/Views/404.php';
                     }
                 }else{
-
+                    $this->currentController = 'public/Views/'.$url[0].'/index.php';
                 }
             }else{
                 $this->currentController = 'public/Views/'.$url[0].'/index.php';
