@@ -1,13 +1,36 @@
 <?php
+header("Content-Type: application/json; charset=UTF-8");
+//include_once("./app/libraries/vendor/autoload.php");
 include_once("./app/config/config.php");
 
-$mysql = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME,);
-if(mysqli_connect_error()) {
-	trigger_error("Failed to conencto to MySQL: " . mysql_connect_error(),E_USER_ERROR);
+function loader($class)
+{
+    $filename = $class. '.php';
+    $file ='./app/libraries/' . $filename;
+    if (!file_exists($file))
+    {
+        $file ='./app/model/'. $filename;
+        if (!file_exists($file)){
+            return false;
+        }
+    }
+    include $file;
 }
+spl_autoload_register('loader'); // set class auto loader
 
-$sql = "SELECT * FROM `vacancy` WHERE vacancyState = 'a' OR vacancyState = 'b' ORDER BY `vacancyId`";
-$excute = $mysql->query($sql);
-$results = $excute-> fetch_assoc();
-$json = json_encode($results);
-echo json_encode($results);
+ini_set("log_errors", 1);
+ini_set("error_log", "./app/error.log"); //create a error log file
+$db = Database::getInstance();
+$mysqli = $db->getConnection(); // set db connection
+/*
+echo "this is api<pre>";
+print_r($_POST);
+echo "</pre><br>";
+echo "<pre>";
+print_r($_REQUEST);
+echo "</pre><br>";
+echo "<pre>";
+print_r($_GET);
+echo "</pre><br>";
+*/
+$core = new Core($mysqli);

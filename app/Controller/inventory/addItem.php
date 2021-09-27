@@ -1,0 +1,2 @@
+<?php
+$manager = new InventoryManager();

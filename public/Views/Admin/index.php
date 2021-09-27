@@ -22,21 +22,23 @@ this is admin<br>
     <?php
         echo getcwd();
     ?>
-     <a href="/public/test">view</a>
-     <form method="POST" id="showAll">
+     <a href="../test">view</a>
+     <form method="POST" id="showA" name="showAll">
+         <input type="text" name="name">
         <input type="submit" value="Submit">
      </form>
      <div id="show">sdszfsz</div>
 </body>
 <script type="text/javascript">
 		$(document).ready(function() {
-            $("#showAll").submit(function(e) {
+            $("#showA").submit(function(e) {
                 e.preventDefault();
+                var str = $("form").serialize();
+                console.log(str);
                 $.ajax({
 					type: "POST",
-					contentType: "application/json; charset=utf-8",
-					url: "localhost/simple",
-					data: JSON.stringify({'name': name}),
+					url: "localhost/simple?api_key=api_key&&subSytem=inventory$task=addItem$variables=json",
+                    data:str,
 					cache: false,
 					success: function(result) {
 						alert('Company added successfully');

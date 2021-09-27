@@ -18,9 +18,7 @@ class Router{
     protected $currentController;
 
     public function __construct(){
-        echo $_SERVER['REQUEST_URI']."<br>";
         $url = $this->getUrl();
-        print_r($url);
         if(array_key_exists($url[0],Router::$defaultController) && count($url)==1){
             $this->currentController = 'public/Views/'.Router::$defaultController[$url[0]];
         }else if(array_key_exists($url[0],Router::$defaultController)){

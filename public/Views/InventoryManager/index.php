@@ -23,7 +23,7 @@ this is inventory<br>
     <?php
         echo getcwd();
     ?>
-     <a href="/public/test">view</a>
+     <a href="/<?php echo baseUrl; ?>/test">view</a>
      <form method="POST" id="showAll">
         <input type="submit" value="Submit">
      </form>
