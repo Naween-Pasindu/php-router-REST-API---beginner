@@ -11,11 +11,11 @@ class mail{
         $this->email->isSMTP();                        // Set mailer to use SMTP
         $this->email->Host       = 'svr3.educationhost.cloud';    // Specify main SMTP server
         $this->email->SMTPAuth   = true;               // Enable SMTP authentication
-        $this->email->Username   = 'no-reply@dms.educationhost.cloud';     // SMTP username
-        $this->email->Password   = 'SV8VaACL1V';         // SMTP password
+        $this->email->Username   = '';     // SMTP username
+        $this->email->Password   = '';         // SMTP password
         $this->email->SMTPSecure = 'tls';              // Enable TLS encryption, 'ssl' also accepted
         $this->email->Port       = 587; 
-        $this->email->setFrom('no-reply@dms.educationhost.cloud', 'DMS Team');           // Set sender of the mail
+        $this->email->setFrom('', '');           // Set sender of the mail
         $this->email->isHTML(true);                                  
     }
 
