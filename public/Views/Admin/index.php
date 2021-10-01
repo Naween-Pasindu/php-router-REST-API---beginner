@@ -31,7 +31,7 @@ this is admin<br>
 </body>
 <script type="text/javascript">
 		$(document).ready(function() {
-            $("#showA").submit(function(e) {
+          /*  $("#showA").submit(function(e) {
                 e.preventDefault();
                 var str = $("form").serialize();
                 console.log(str);
@@ -49,7 +49,7 @@ this is admin<br>
 						alert(err);
 					}
 				});
-            });
+            }); */
 		});
 </script>
 </html>

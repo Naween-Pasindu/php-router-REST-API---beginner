@@ -39,7 +39,7 @@ var output;
                 console.log(str);
                 $.ajax({
 					type: "POST",
-					url: "localhost/simple?api_key=1234&class=InventoryManager&method=addCompany",
+					url: "localhost/<?php echo baseUrl; ?>?api_key=1234&class=InventoryManager&method=addCompany",
 					data: str, 
                     //data:JSON.stringify(str),
 					cache: false,
@@ -58,7 +58,7 @@ var output;
         function getCompany(){
             output = $.parseJSON($.ajax({
                 type: "POST",
-                url: "localhost/simple?api_key=1234&class=Home&method=viewDonations",
+                url: "localhost/<?php echo baseUrl; ?>?api_key=1234&class=Home&method=viewDonations",
                 dataType: "json", 
                 cache: false,
                 async: false
@@ -86,7 +86,7 @@ var output;
                 let id = output[val]['consumerId'];
                 $.ajax({
 					type: "POST",
-					url: "localhost/simple?api_key=1234&class=InventoryManager&method=updateCompany",
+					url: "localhost/<?php echo baseUrl; ?>?api_key=1234&class=InventoryManager&method=updateCompany",
 					data: {person,id}, 
                     //data:JSON.stringify(str),
 					cache: false,

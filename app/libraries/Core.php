@@ -19,6 +19,7 @@ class Core{
             }else{
                 $this->params =  []; 
             }
+            
             call_user_func_array([$this->currentModel, $this->currentMethod], $this->params);
         }
 

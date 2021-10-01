@@ -26,7 +26,8 @@ class Router{
                 $this->currentController = 'public/Views/'.Router::$defaultController[$url[0]];
             }
         }else if(array_key_exists($url[0],Router::$routes)){
-            if(count($url)>2){
+            //print_r($url);
+            if(count($url)>=2){
                 if(in_array($url[1],Router::$routes[$url[0]])){
                     if(file_exists('public/Views/'.$url[0].'/'.$url[1].'/'.$url[2].'.php')){
                         $this->currentController = 'public/Views/'.$url[0].'/'.$url[1].'/'.$url[2].'.php';
@@ -34,7 +35,13 @@ class Router{
                         $this->currentController = 'public/Views/404.php';
                     }
                 }else{
-                    $this->currentController = 'public/Views/'.$url[0].'/index.php';
+                    //if requested page not in routes array
+                    if(file_exists('public/Views/'.$url[0].'/'.$url[1].'.php')){
+                        
+                        $this->currentController = 'public/Views/'.$url[0].'/'.$url[1].'.php';
+                    }else{
+                        $this->currentController = 'public/Views/404.php';
+                    }                    
                 }
             }else{
                 $this->currentController = 'public/Views/'.$url[0].'/index.php';

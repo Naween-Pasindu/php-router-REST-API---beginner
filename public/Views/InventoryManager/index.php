@@ -36,7 +36,7 @@ this is inventory<br>
                 $.ajax({
 					type: "POST",
 					contentType: "application/json; charset=utf-8",
-					url: "localhost/simple",
+					url: "localhost/<?php echo baseUrl; ?>",
 					data: JSON.stringify({'name': name}),
 					cache: false,
 					success: function(result) {

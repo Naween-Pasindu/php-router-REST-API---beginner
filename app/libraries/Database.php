@@ -18,9 +18,9 @@ class Database{
 		$this->_connection = new mysqli($this->_host, $this->_username, 
 			$this->_password, $this->_database);
 
-		if(mysqli_connect_error()) {
-			trigger_error("Failed to conencto to MySQL: " . mysql_connect_error(),
-				 E_USER_ERROR);
+		if($this->_connection->connect_errno) {
+			//trigger_error("Failed to conencto to MySQL: " . $this->_connection->connect_errno,E_USER_ERROR);
+			echo json_encode("{'code':$sql}");
 		}
 	}
 
@@ -29,4 +29,16 @@ class Database{
 	public function getConnection() {
 		return $this->_connection;
 	}
+
+/*	public function backlog() {
+
+	}
+
+	public function encrypt() {
+
+	}
+
+	public function decrypt() {
+
+	}*/
 }

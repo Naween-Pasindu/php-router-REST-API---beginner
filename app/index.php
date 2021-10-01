@@ -1,6 +1,6 @@
 <?php
 header("Content-Type: application/json; charset=UTF-8");
-//include_once("./app/libraries/vendor/autoload.php");
+include_once("./app/libraries/vendor/autoload.php");
 include_once("./app/config/config.php");
 
 function loader($class)

@@ -32,7 +32,7 @@ this is home<br>
 function getCompany(){
     var output = $.parseJSON($.ajax({
         type: "POST",
-        url: "localhost/simple?api_key=1234&class=Home&method=viewDonations",
+        url: "localhost/<?php echo baseUrl; ?>?api_key=1234&class=Home&method=viewDonations",
         dataType: "json", 
         cache: false,
         async: false
