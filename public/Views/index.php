@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="public/assets/css/main.css">
 </head>
 <body>
-this is home<br>
+this is home 1<br>
 <a href="Admin/">Admin</a><br>
 <a href="InventoryManager/">InventoryManager</a><br>
 <a href="DisasterOfficer/">DisasterManager</a><br>
