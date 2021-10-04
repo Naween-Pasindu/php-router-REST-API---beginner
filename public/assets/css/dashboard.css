@@ -1,0 +1,182 @@
+
+
+/* Googlefont Poppins CDN Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+.sidebar{
+  position: fixed;
+  height: 100%;
+  width: 220px;
+  background: #0A2558;
+  transition: all 0.2s ease;
+}
+.sidebar.active{
+  width: 60px;
+}
+.sidebar .logo-details{
+  height: 80px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding-left: 10px;
+}
+.sidebar .logo-details .logo_name{
+  color: #fff;
+  font-size: 22px;
+  font-weight: 500;
+  padding-left: 10px;
+}
+.sidebar .nav-links{
+  margin-top: 10px;
+}
+.sidebar .nav-links li{
+  position: relative;
+  list-style: none;
+  height: 40px;
+}
+.sidebar .nav-links li a{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.sidebar .nav-links li a.active{
+  background: #081D45;
+  background-color: #ecf0f5;
+}
+.sidebar .nav-links li a:hover{
+  background: #a9aeb6;
+}
+.sidebar .nav-links li i{
+  min-width: 60px;
+  text-align: center;
+  font-size: 18px;
+  color: #fff;
+}
+.sidebar .nav-links li a.active i{
+  color: rgb(0, 0, 0);
+}
+.sidebar .nav-links li a .links_name{
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.sidebar .nav-links li a.active .links_name {
+  color: black;
+}
+
+.dashboard-section{
+  position: relative;
+  background: #f5f5f5;
+  min-height: 100vh;
+  width: calc(100% - 220px);
+  left: 220px;
+  transition: all 0.2s ease;
+}
+.sidebar.active ~ .dashboard-section{
+  width: calc(100% - 60px);
+  left: 60px;
+}
+
+.dashboard-section nav{
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  background: #fff;
+  align-items: center;
+  position: fixed;
+  width: calc(100% - 220px);
+  left: 220px;
+  z-index: 100;
+  padding: 0 20px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+.sidebar.active ~ .dashboard-section nav{
+  left: 60px;
+  width: calc(100% - 60px);
+}
+.dashboard-section nav .sidebar-button{
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 500;
+}
+nav .sidebar-button i{
+  font-size: 35px;
+  margin-right: 10px;
+}
+.dashboard-section nav .mid{
+  text-align: center;
+  position: relative;
+  max-width: 550px;
+  width: 100%;
+  margin: 0 20px;
+}
+.mid a {
+  font-size: 18px;
+  font-weight: 400;
+  white-space: nowrap;
+  text-decoration: none;
+  color: black;
+  margin-right: 15px;
+}
+
+
+.dashboard-section nav .search-box{
+  position: relative;
+  height: 50px;
+  max-width: 550px;
+  width: 100%;
+  margin: 0 20px;
+}
+nav .search-box input{
+  height: 100%;
+  width: 100%;
+  outline: none;
+  background: #F5F6FA;
+  border: 2px solid #EFEEF1;
+  border-radius: 6px;
+  font-size: 18px;
+  padding: 0 15px;
+}
+nav .search-box .bx-search{
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  background: #2697FF;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 4px;
+  line-height: 40px;
+  text-align: center;
+  color: #fff;
+  font-size: 22px;
+  transition: all 0.4 ease;
+}
+
+.rightcorner{
+  text-align: right;
+  position: relative;
+}
+.rightcorner a {
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+  color: black;
+  border: 2px solid #EFEEF1;
+  border-radius: 6px;
+  height: 30px;
+  padding: 0 2px 0 2px;
+  margin-left: 5px;
+}

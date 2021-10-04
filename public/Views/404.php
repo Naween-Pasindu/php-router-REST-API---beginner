@@ -53,7 +53,7 @@
 		</h3>
 		<p>the page you are looking for not avaible!</p>
 		
-		<a href="./" class="link_404">Go to Home</a>
+		<a href="/<?php echo baseUrl;?>" class="link_404">Go to Home</a>
 	</div>
 		</div>
 		</div>

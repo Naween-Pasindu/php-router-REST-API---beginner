@@ -12,7 +12,8 @@
 this is home<br>
 <a href="Admin/">Admin</a><br>
 <a href="InventoryManager/">InventoryManager</a><br>
-<a href="DisasterOfficer/">InventoryManager</a><br>
+<a href="DisasterOfficer/">DisasterManager</a><br>
+<a href="ResponsiblePerson/">ResponsiblePerson</a><br>
 <a href="test">test</a><br>
 <a href="a">a</a><br>
 <a href="b">b</a><br>  
