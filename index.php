@@ -1,5 +1,5 @@
 <?php
-session_start();
+/*session_start();
 define("baseUrl","/home/site/wwwroot");
 
 if($_SERVER['REQUEST_METHOD'] === 'PUT' || $_SERVER['REQUEST_METHOD'] === 'DELETE' || $_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -7,4 +7,6 @@ if($_SERVER['REQUEST_METHOD'] === 'PUT' || $_SERVER['REQUEST_METHOD'] === 'DELET
 }else{
     require  "public/index.php";
 } 
+*/
+phpinfo();
 //require  "app/index.php";
