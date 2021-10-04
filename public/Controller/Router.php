@@ -58,8 +58,6 @@ class Router{
                     $this->currentController = 'public/Views/404.php';
                 }
             }
-        }elseif(strlen($url)==0){
-            $this->currentController = 'public/Views/index.php';
         }else{
             $this->currentController = 'public/Views/404.php';
         }
