@@ -19,9 +19,7 @@ class Router{
 
     public function __construct(){
         $url = $this->getUrl();
-        if(strlen($url)==0){
-            $this->currentController = 'public/Views/index.php';
-        }else if(array_key_exists($url[0],Router::$defaultController) && count($url)==1){
+        if(array_key_exists($url[0],Router::$defaultController) && count($url)==1){
             $this->currentController = 'public/Views/'.Router::$defaultController[$url[0]];
         }else if(array_key_exists($url[0],Router::$defaultController)){
             if(array_key_exists($url[1],Router::$defaultController)){
