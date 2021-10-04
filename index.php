@@ -7,5 +7,5 @@ if($_SERVER['REQUEST_METHOD'] === 'PUT' || $_SERVER['REQUEST_METHOD'] === 'DELET
 }else{
     require  "public/index.php";
 } 
-
+exit();
 //require  "app/index.php";
