@@ -20,7 +20,7 @@ class Database{
 
 		if($this->_connection->connect_errno) {
 			//trigger_error("Failed to conencto to MySQL: " . $this->_connection->connect_errno,E_USER_ERROR);
-			echo json_encode("{'code':$sql}");
+			echo json_encode("{'code':".E_USER_ERROR."}");
 		}
 	}
 
