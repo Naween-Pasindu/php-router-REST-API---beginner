@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="public/assets/css/main.css">
 </head>
 <body>
-this is home 1<br>
+this is home<br>
 <a href="Admin/">Admin</a><br>
 <a href="InventoryManager/">InventoryManager</a><br>
 <a href="DisasterOfficer/">DisasterManager</a><br>
@@ -33,11 +33,14 @@ this is home 1<br>
 function getCompany(){
     var output = $.parseJSON($.ajax({
         type: "POST",
-        url: "localhost/<?php echo baseUrl; ?>?api_key=1234&class=Home&method=viewDonations",
-        dataType: "json", 
+        url: "localhost/<?php echo baseUrl; ?>/Home_viewDonations/1234",
+        dataType: "json",
+        data : JSON.stringify({'key': 'ABCD'}),
         cache: false,
         async: false
     }).responseText);
+    console.log(output);
+    //debugger;
     var table = document.getElementById("myTable");
     for (var i = 0; i < output.length; i++){
         let obj = output[i];

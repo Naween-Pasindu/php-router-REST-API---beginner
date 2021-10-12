@@ -35,13 +35,21 @@ var output;
             getCompany();
             $("#add").submit(function(e) {
                 e.preventDefault();
-                var str = $("form").serialize();
-                console.log(str);
+                var str = [];
+                var formElement = document.querySelector("#add");
+                var formData = new FormData(formElement);
+                //var array = {'key':'ABCD'}
+                var object = {};
+                formData.forEach(function(value, key){
+                    object[key] = value;
+                });
+                object['key'] = 'ABCD';
+                var json = JSON.stringify(object);
+                console.log(json);
                 $.ajax({
 					type: "POST",
-					url: "localhost/<?php echo baseUrl; ?>?api_key=1234&class=InventoryManager&method=addCompany",
-					data: str, 
-                    //data:JSON.stringify(str),
+					url: "localhost/<?php echo baseUrl; ?>/InventoryManager_addCompany/1234",
+					data: json, 
 					cache: false,
 					success: function(result) {
 						$('#trow').empty();
@@ -58,11 +66,13 @@ var output;
         function getCompany(){
             output = $.parseJSON($.ajax({
                 type: "POST",
-                url: "localhost/<?php echo baseUrl; ?>?api_key=1234&class=Home&method=viewDonations",
+                url: "localhost/<?php echo baseUrl; ?>/Home_viewDonations/1234",
                 dataType: "json", 
+                data : JSON.stringify({'key': 'ABCD'}),
                 cache: false,
                 async: false
             }).responseText);
+            console.log(output);
             var table = document.getElementById("trow");
             for (var i = 0; i < output.length; i++){
                 let obj = output[i];
@@ -86,9 +96,9 @@ var output;
                 let id = output[val]['consumerId'];
                 $.ajax({
 					type: "POST",
-					url: "localhost/<?php echo baseUrl; ?>?api_key=1234&class=InventoryManager&method=updateCompany",
-					data: {person,id}, 
-                    //data:JSON.stringify(str),
+					url: "localhost/<?php echo baseUrl; ?>/InventoryManager_updateCompany/1234",
+					//data: {'key': 'ABCD',person,id}, 
+                    data:JSON.stringify({'key': 'ABCD',person,id}),
 					cache: false,
 					success: function(result) {
 						$('#trow').empty();
