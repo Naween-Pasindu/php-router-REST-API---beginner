@@ -1,4 +1,0 @@
-api request ->
-domain?api_key=&class=$method=
-ex for web:
-localhost/simple?api_key=api_key&class=inventory&method=addItem

@@ -1,101 +1,128 @@
 <?php
 class Core{
         protected $currentModel = "Home";
-        protected $currentMethod = "viewDonations";
+        protected $currentMethod = "page";
+        protected $nonSecure = ['Home','Employee']; // releasing no login required classes
         protected $params = [];
         protected $connection; 
+        protected $permission = array(
+                                    'Admin' => 1,
+                                    'User' => 2
+                                );
+        private $userType=0;
+        private $userId=0;
 
         public function __construct($mysqli){
             global $errorCode;
             $this->connection = $mysqli;
-            $this->setParams();
-            $this->filterRequest();
-            if(!$this->requestAuthorization()){
-                echo json_encode("{'code':".$errorCode['apiKeyError']."}");
-                exit();
-            }
+            $this->authorization();
+            $this->setParams(); // adding json data to array
+            $this->urlParams(); // adding url data to array
+            $this->setClass();
             $method = new ReflectionMethod($this->currentModel, $this->currentMethod);
             $parameters = $method->getParameters();
             if (count($parameters)==0) {
                 $this->params = [];
             }
-            
             call_user_func_array([$this->currentModel, $this->currentMethod], array($this->params));
+        }        
+        public function  setParams(){
+            $json = file_get_contents('php://input');
+		    $this->params = json_decode($json,true);
+            if(is_null($this->params)){
+                $this->params = [];
+            }
         }
-        public function filterRequest(){
-            global $errorCode;
-            if(isset($_SERVER['REQUEST_URI'])){
-                $url = rtrim($_SERVER['REQUEST_URI'], '/');
+        public function urlParams(){
+            if(isset($_GET['request'])){
+                if($_GET['request']=="index.php"){
+                    exit();
+                }
+                $url = rtrim($_GET['request'], '/');
                 $url = filter_var($url, FILTER_SANITIZE_URL);
                 $url = explode('/', $url);
-                $temp = explode('_', $url[count($url)-2]);
-                //$count = count($temp);
-                if(!class_exists($temp[0])) {
-                    //echo json_encode("{'code':".$errorCode['classNotFound']."}");
-                    echo json_encode("{'code':".$temp[0]."}");
-                    exit();
-                }
-                $this->setClass($temp[0]);
-                if(!$this->authorization()){
-                    if(!strcmp($this->currentModel,"Home")){
-                        echo json_encode("{'code':".$errorCode['userKeyError']."}");
-                        
-                        exit();
+                $this->params['receivedParams'] = $url;
+            }
+        } 
+        public function  setClass(){
+            global $errorCode;
+            global $route;
+            $url = trim($this->params['receivedParams'][0]);
+
+            $array = $route->checkAvailibility($url);
+            foreach($array as $item) {
+                $temp = explode("@", $item);
+                if(in_array($temp[0],$this->nonSecure)){
+                        $this->currentModel = $temp[0];
+                        $this->currentModel =  new $this->currentModel($this->connection);
+                        $this->setMthod($temp[1]);
+                        array_shift($this->params['receivedParams']);
+                        return;
+                }else if(in_array($temp[0],array_keys($this->permission))){
+                    if($this->userType == $this->permission[$temp[0]]){
+                        $this->currentModel = $temp[0];
+                        $this->currentModel =  new $this->currentModel($this->connection);
+                        $this->setMthod($temp[1]);
+                        array_shift($this->params['receivedParams']);
+                        $this->params['userId'] = $this->userId;
+                        return;
                     }
                 }
-                $this->currentModel =  new $this->currentModel($this->connection);
-                if(method_exists($this->currentModel,$temp[1])){
-                    $this->setMthod($temp[1]);
-                }else{
-                    echo json_encode("{'code':".$errorCode['methodNotFound']."}");
-                    exit();
-                }
-            }else{
-                echo json_encode("{'code':".$errorCode['unknownError']."}");
-                exit();
             }
-        }
-        public function  setParams(){
-            global $errorCode;
-            $json = file_get_contents('php://input');
-            //echo $json;exit();
-		    $this->params = json_decode($json,true);
-            if(count($this->params)<1){
-                echo json_encode("{'code':".$errorCode['unknownError']."}");
-                exit();    
-            }
-        }
-        public function  setClass($class){
-            $this->currentModel = $class;
+            http_response_code(403);
+            echo json_encode(array("code"=>$errorCode['permissionError']));
+            exit();
         }
         public function  setMthod($method){
-            $this->currentMethod = $method;
-        }
-        public function  authorization(){
-            //echo json_encode("{'code':".$this->params['key']."}");
-            if(isset($this->params['key'])){
-                $key = $this->params['key'];
-                
-                unset($this->params['key']);
-                if(isset($_SESSION['token'])){
-                    if($_SESSION['token']==$key){
-                        return true;
-                    }
-                }
+            global $errorCode;
+            if(method_exists($this->currentModel,$method)){
+                $this->currentMethod = $method;
+            }else{
+                http_response_code(404);
+                echo json_encode(array("code"=>$errorCode['methodNotFound']));
+                exit();
             }
-            return false;
-        }
-        public function  requestAuthorization(){
-            if(isset($_SERVER['REQUEST_URI'])){
-                $url = rtrim($_SERVER['REQUEST_URI'], '/');
-                $url = filter_var($url, FILTER_SANITIZE_URL);
-                $url = explode('/', $url);
-                array_shift($url);
-                $temp = $url[count($url)-1];
-                if(API_KEY==$temp){
-                    return true;
-                }
-                return false;
+        }       
+        public function  authorization(){
+            global $errorCode;
+            $headers = apache_request_headers();
+            if(isset($headers['HTTP_APIKEY'])){
+                $lifetime = 60*60;
+                $key = base64_decode($headers['HTTP_APIKEY']);
+                $secure = new Openssl_EncryptDecrypt();
+                $decrypted = $secure->decrypt($key,ENCRYPTION_KEY);
+                if($decrypted){
+                    $data = json_decode($decrypted,true);
+                    if(isset($data['auth'])){
+                        if($data['auth']){
+                            if(time() - $data['issue'] < $lifetime){
+                                $id = $data['userId'];
+                                $role = $data['userRole'];
+                                $sql = "SELECT l.keyAuth FROM login l WHERE l.empId = $id AND l.roleId = $role";
+                                $excute = $this->connection->query($sql);
+                                $data2 = $excute-> fetch_assoc();
+                                if(!strcmp($data['tokenKey'],$data2['keyAuth'])){
+                                    $this->userType=$role;
+                                    $this->userId = $data['userId'];
+                                }else{
+                                    http_response_code(401);
+                                    echo json_encode(array("code"=>$errorCode['tokenRewoked']));
+                                    exit();
+                                }
+                            }else{
+                                http_response_code(401);
+                                echo json_encode(array("code"=>$errorCode['tokenExpired']));
+                                exit();
+                            }
+                        }
+                    }
+                }else{
+                    http_response_code(401);
+                    echo json_encode(array("code"=>$errorCode['apiKeyError']));
+                    exit();
+                }                            
+            }else{
+                $this->userType=0;
             }
         }
 }

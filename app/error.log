@@ -1,7 +1,1 @@
 
-[12-Oct-2021 13:52:42 Europe/Berlin] PHP Fatal error:  Uncaught Error: Unknown named parameter $company in F:\xampp\htdocs\sahanadara\app\libraries\Core.php:23
-Stack trace:
-#0 F:\xampp\htdocs\sahanadara\app\index.php(26): Core->__construct(Object(mysqli))
-#1 F:\xampp\htdocs\sahanadara\index.php(6): require('F:\\xampp\\htdocs...')
-#2 {main}
-  thrown in F:\xampp\htdocs\sahanadara\app\libraries\Core.php on line 23
