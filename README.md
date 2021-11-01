@@ -1,5 +1,3 @@
-# sahanadara
-
 Create branch<br />
   <code>git checkout -b <new_branch_name></code>
   
